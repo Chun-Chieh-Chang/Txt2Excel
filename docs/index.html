@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Txt2Excel - 高效的TXT轉Excel工具，自動解析數據並填入Excel報表">
+    <meta name="keywords" content="TXT轉Excel, 數據轉換, Excel自動化, Python工具">
+    <meta name="author" content="Wesley Chang">
+    <title>Txt2Excel - TXT轉Excel工具</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo-icon">📝</span>
+                <span class="logo-text">Txt2Excel</span>
+                <span class="version-badge">v2.1</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">功能特點</a>
+                <a href="#download" class="nav-link">下載</a>
+                <a href="#docs" class="nav-link">文檔</a>
+                <a href="#contact" class="nav-link">聯繫</a>
+                <a href="https://github.com/Chun-Chieh-Chang/Txt2Excel" target="_blank" class="nav-link github-link">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">Txt2Excel</span>
+                    <br>
+                    高效的TXT轉Excel工具
+                </h1>
+                <p class="hero-subtitle">
+                    自動解析TXT數據，智能填入Excel報表<br>
+                    支持工作表保護、合併儲存格、圖片保護等進階功能
+                </p>
+                <div class="hero-buttons">
+                    <a href="#download" class="btn btn-primary">
+                        <span class="btn-icon">⬇️</span>
+                        立即下載
+                    </a>
+                    <a href="#docs" class="btn btn-secondary">
+                        <span class="btn-icon">📖</span>
+                        查看文檔
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">2.1</div>
+                        <div class="stat-label">最新版本</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">100%</div>
+                        <div class="stat-label">開源免費</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">Python</div>
+                        <div class="stat-label">技術棧</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">✨</span>
+                功能特點
+            </h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">智能解析</h3>
+                    <p class="feature-description">
+                        自動識別TXT文件編碼格式，智能解析數據結構，支持多種數據格式
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">精確填入</h3>
+                    <p class="feature-description">
+                        靈活配置填入規則，支持橫向填入，自動跳過合併儲存格和鎖定儲存格
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🖼️</div>
+                    <h3 class="feature-title">圖片保護</h3>
+                    <p class="feature-description">
+                        完整保留Excel文件中的圖片和格式，支持工作表保護設定的自動恢復
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">安全可靠</h3>
+                    <p class="feature-description">
+                        支持密碼保護的工作表，自動處理權限問題，確保數據安全
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">雙引擎支援</h3>
+                    <p class="feature-description">
+                        同時支持openpyxl和win32com兩種引擎，自動選擇最佳處理方式
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title">圖形界面</h3>
+                    <p class="feature-description">
+                        友好的Tkinter圖形界面，操作簡單直觀，實時顯示處理進度
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">⬇️</span>
+                下載與安裝
+            </h2>
+            <div class="download-content">
+                <div class="download-card">
+                    <div class="download-header">
+                        <h3>源代碼版本</h3>
+                        <span class="download-badge">推薦</span>
+                    </div>
+                    <p class="download-description">
+                        適合開發者和需要自定義功能的用戶
+                    </p>
+                    <div class="download-steps">
+                        <div class="step">
+                            <span class="step-number">1</span>
+                            <div class="step-content">
+                                <h4>克隆倉庫</h4>
+                                <code>git clone https://github.com/Chun-Chieh-Chang/Txt2Excel.git</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">2</span>
+                            <div class="step-content">
+                                <h4>安裝依賴</h4>
+                                <code>pip install -r requirements.txt</code>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <span class="step-number">3</span>
+                            <div class="step-content">
+                                <h4>運行程序</h4>
+                                <code>python src/main.py</code>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://github.com/Chun-Chieh-Chang/Txt2Excel" class="btn btn-primary" target="_blank">
+                        前往 GitHub
+                    </a>
+                </div>
+                <div class="download-card">
+                    <div class="download-header">
+                        <h3>可執行文件</h3>
+                    </div>
+                    <p class="download-description">
+                        適合一般用戶，無需安裝Python環境
+                    </p>
+                    <div class="download-info">
+                        <div class="info-item">
+                            <span class="info-label">文件名：</span>
+                            <span class="info-value">Txt2Excel.exe</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">大小：</span>
+                            <span class="info-value">約 50 MB</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">系統：</span>
+                            <span class="info-value">Windows 10/11</span>
+                        </div>
+                    </div>
+                    <a href="https://github.com/Chun-Chieh-Chang/Txt2Excel/releases" class="btn btn-secondary" target="_blank">
+                        下載 Release
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section id="docs" class="documentation">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">📚</span>
+                文檔資源
+            </h2>
+            <div class="docs-grid">
+                <a href="user_manual.html" class="doc-card">
+                    <div class="doc-icon">📖</div>
+                    <h3 class="doc-title">用戶手冊</h3>
+                    <p class="doc-description">詳細的使用說明和操作指南</p>
+                    <span class="doc-link">查看 →</span>
+                </a>
+                <a href="technical_documentation.html" class="doc-card">
+                    <div class="doc-icon">🔧</div>
+                    <h3 class="doc-title">技術文檔</h3>
+                    <p class="doc-description">架構設計和開發者文檔</p>
+                    <span class="doc-link">查看 →</span>
+                </a>
+                <a href="CHANGELOG.html" class="doc-card">
+                    <div class="doc-icon">📝</div>
+                    <h3 class="doc-title">更新日誌</h3>
+                    <p class="doc-description">版本更新記錄和新功能介紹</p>
+                    <span class="doc-link">查看 →</span>
+                </a>
+                <a href="README.html" class="doc-card">
+                    <div class="doc-icon">ℹ️</div>
+                    <h3 class="doc-title">README</h3>
+                    <p class="doc-description">項目概述和快速開始</p>
+                    <span class="doc-link">查看 →</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack Section -->
+    <section class="tech-stack">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">🛠️</span>
+                技術棧
+            </h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon">🐍</div>
+                    <div class="tech-name">Python 3.x</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🖼️</div>
+                    <div class="tech-name">Tkinter</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">📊</div>
+                    <div class="tech-name">openpyxl</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🔧</div>
+                    <div class="tech-name">win32com</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🔍</div>
+                    <div class="tech-name">chardet</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon">🎨</div>
+                    <div class="tech-name">Pillow</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="title-icon">📧</span>
+                聯繫方式
+            </h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-label">開發者</div>
+                        <div class="contact-value">Wesley Chang</div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">電子郵箱</div>
+                        <div class="contact-value">
+                            <a href="mailto:wesleychang2025@gmail.com">wesleychang2025@gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-label">GitHub</div>
+                        <div class="contact-value">
+                            <a href="https://github.com/Chun-Chieh-Chang/Txt2Excel" target="_blank">
+                                Chun-Chieh-Chang/Txt2Excel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <div class="footer-brand">
+                        <span class="logo-icon">📝</span>
+                        <span class="logo-text">Txt2Excel</span>
+                    </div>
+                    <p class="footer-description">
+                        高效的TXT轉Excel工具 - 開源免費
+                    </p>
+                </div>
+                <div class="footer-right">
+                    <p class="footer-copyright">
+                        © 2025 Wesley Chang. All rights reserved.
+                    </p>
+                    <p class="footer-license">
+                        Licensed under MIT License
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
