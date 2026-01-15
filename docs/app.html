@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Txt2Excel Web App - 在線TXT轉Excel工具">
+    <title>Txt2Excel Web App - 在線工具</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="app-styles.css">
+</head>
+
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo-icon">📝</span>
+                <span class="logo-text">Txt2Excel Web</span>
+                <span class="version-badge">Online</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">首頁</a>
+                <a href="app.html" class="nav-link active">Web 工具</a>
+                <a href="https://github.com/Chun-Chieh-Chang/Txt2Excel" target="_blank" class="nav-link github-link">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主內容區 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 步驟指示器 -->
+            <div class="steps-indicator">
+                <div class="step-item active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">上傳 TXT</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step-item" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">上傳 Excel</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step-item" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">配置規則</div>
+                </div>
+                <div class="step-arrow">→</div>
+                <div class="step-item" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">執行填入</div>
+                </div>
+            </div>
+
+            <!-- 工作區 -->
+            <div class="workspace">
+                <!-- 左側：TXT 數據面板 -->
+                <div class="panel" id="txtPanel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">
+                            <span class="panel-icon">📄</span>
+                            TXT 數據源
+                        </h2>
+                        <span class="data-count" id="txtCount">0 筆</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="upload-area" id="txtUploadArea">
+                            <input type="file" id="txtFileInput" accept=".txt" hidden>
+                            <div class="upload-icon">📁</div>
+                            <div class="upload-text">點擊或拖放 TXT 文件</div>
+                            <div class="upload-hint">支持自動編碼檢測</div>
+                        </div>
+                        <div class="file-info" id="txtFileInfo" style="display: none;">
+                            <div class="file-name" id="txtFileName"></div>
+                            <button class="btn-small btn-danger" id="txtClearBtn">清除</button>
+                        </div>
+                        <div class="data-preview" id="txtPreview" style="display: none;">
+                            <div class="preview-header">數據預覽</div>
+                            <div class="preview-list" id="txtPreviewList"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右側：Excel 配置面板 -->
+                <div class="panel" id="excelPanel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">
+                            <span class="panel-icon">📊</span>
+                            Excel 目標文件
+                        </h2>
+                        <span class="data-count" id="excelSheetCount">0 個工作表</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="upload-area" id="excelUploadArea">
+                            <input type="file" id="excelFileInput" accept=".xlsx,.xls" hidden>
+                            <div class="upload-icon">📊</div>
+                            <div class="upload-text">點擊或拖放 Excel 文件</div>
+                            <div class="upload-hint">支持 .xlsx 和 .xls 格式</div>
+                        </div>
+                        <div class="file-info" id="excelFileInfo" style="display: none;">
+                            <div class="file-name" id="excelFileName"></div>
+                            <button class="btn-small btn-danger" id="excelClearBtn">清除</button>
+                        </div>
+                        <div class="sheet-selector" id="sheetSelector" style="display: none;">
+                            <label class="form-label">選擇工作表</label>
+                            <select id="sheetSelect" class="form-select"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 配置區 -->
+            <div class="config-section" id="configSection" style="display: none;">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">
+                            <span class="panel-icon">⚙️</span>
+                            填入規則配置
+                        </h2>
+                        <button class="btn-small btn-primary" id="addRuleBtn">
+                            <span>➕</span> 新增規則
+                        </button>
+                    </div>
+                    <div class="panel-body">
+                        <div class="rules-list" id="rulesList">
+                            <div class="empty-state">
+                                <div class="empty-icon">📋</div>
+                                <div class="empty-text">尚未添加任何規則</div>
+                                <div class="empty-hint">點擊上方「新增規則」按鈕開始配置</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 執行區 -->
+            <div class="action-section" id="actionSection" style="display: none;">
+                <div class="progress-panel" id="progressPanel" style="display: none;">
+                    <div class="progress-header">
+                        <span class="progress-icon">⏳</span>
+                        <span class="progress-text" id="progressText">準備中...</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="progressBar"></div>
+                    </div>
+                    <div class="progress-stats" id="progressStats">0 / 0 (0%)</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn btn-large btn-success" id="executeBtn">
+                        <span class="btn-icon">▶️</span>
+                        開始執行
+                    </button>
+                    <button class="btn btn-large btn-secondary" id="resetBtn">
+                        <span class="btn-icon">🔄</span>
+                        重置全部
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 規則配置對話框 -->
+    <div class="modal" id="ruleModal" style="display: none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">配置填入規則</h3>
+                <button class="modal-close" id="modalCloseBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">工作表</label>
+                    <select id="ruleSheetSelect" class="form-select"></select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">起始儲存格</label>
+                    <input type="text" id="ruleStartCell" class="form-input" placeholder="例如: I26" value="I26">
+                    <div class="form-hint">格式：列字母 + 行號（如 A1, B2, I26）</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">每頁筆數</label>
+                    <input type="number" id="ruleCount" class="form-input" min="1" max="100" value="8">
+                    <div class="form-hint">每個工作表要填入的數據筆數</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">填入方向</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="direction" value="horizontal" checked>
+                            <span>橫向（每隔一列）</span>
+                        </label>
+                    </div>
+                    <div class="form-hint">固定為橫向填入，自動跳過一列（I, K, M, O...）</div>
+                </div>
+                <div class="preview-box" id="rulePreview">
+                    <div class="preview-label">預覽</div>
+                    <div class="preview-content" id="rulePreviewText">將填入 I26 → Q26</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modalCancelBtn">取消</button>
+                <button class="btn btn-primary" id="modalConfirmBtn">確定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 結果對話框 -->
+    <div class="modal" id="resultModal" style="display: none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">執行完成</h3>
+                <button class="modal-close" id="resultCloseBtn">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="result-success">
+                    <div class="result-icon">✅</div>
+                    <div class="result-title">數據填入成功！</div>
+                    <div class="result-stats" id="resultStats"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="downloadBtn">
+                    <span class="btn-icon">⬇️</span>
+                    下載 Excel
+                </button>
+                <button class="btn btn-secondary" id="resultOkBtn">關閉</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app-script.js"></script>
+</body>
+
+</html>
