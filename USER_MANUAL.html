@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Txt2Excel v3.0 - 操作手冊</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'Segoe UI', Arial, sans-serif;
+            line-height: 1.8;
+            color: #334155;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 3rem 2rem;
+        }
+
+        .section {
+            margin-bottom: 4rem;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title .icon {
+            font-size: 2rem;
+        }
+
+        .step {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 16px;
+            border-left: 4px solid #667eea;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .step-description {
+            color: #475569;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        /* UI Mock-ups using CSS */
+        .ui-mockup {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .ui-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px 8px 0 0;
+            margin: -2rem -2rem 1.5rem -2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .upload-zone {
+            border: 3px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            background: #f8fafc;
+            transition: all 0.3s ease;
+        }
+
+        .upload-zone:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: #94a3b8;
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-outline {
+            background: white;
+            color: #64748b;
+            border: 2px dashed #cbd5e1;
+        }
+
+        .btn-outline:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .data-table th {
+            background: #f1f5f9;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .data-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #f1f5f9;
+            color: #64748b;
+        }
+
+        .modal-demo {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .profile-item {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .profile-item:hover {
+            border-color: #667eea;
+            background: #f8fafc;
+        }
+
+        .profile-item.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .icon-btn.edit {
+            background: #fef3c7;
+            color: #f59e0b;
+        }
+
+        .icon-btn.edit:hover {
+            background: #fde68a;
+        }
+
+        .icon-btn.delete {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        .icon-btn.delete:hover {
+            background: #fecaca;
+        }
+
+        .tips {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .tips-title {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tips-content {
+            color: #78350f;
+        }
+
+        .warning {
+            background: #fee2e2;
+            border-left: 4px solid #ef4444;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-title {
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning-content {
+            color: #7f1d1d;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        ul,
+        ol {
+            margin-left: 2rem;
+            margin-top: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        code {
+            background: #f1f5f9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: #e11d48;
+            font-size: 0.9em;
+        }
+
+        .toc {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+        }
+
+        .toc-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .toc-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 0.75rem;
+        }
+
+        .toc-list a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .toc-list a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: #e2e8f0;
+            z-index: 0;
+        }
+
+        .step-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #e2e8f0;
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #94a3b8;
+        }
+
+        .step-item.active .step-circle {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .content {
+                padding: 2rem 1rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Txt2Excel v3.0</h1>
+            <p>完整操作手冊 - 從入門到精通</p>
+        </div>
+
+        <div class="content">
+            <!-- 目錄 -->
+            <div class="toc">
+                <div class="toc-title">📑 目錄</div>
+                <ul class="toc-list">
+                    <li><a href="#intro">一、功能介紹</a></li>
+                    <li><a href="#basic">二、基本操作流程</a></li>
+                    <li><a href="#profile">三、設定檔管理（多產品支援）</a></li>
+                    <li><a href="#advanced">四、進階功能</a></li>
+                    <li><a href="#troubleshooting">五、常見問題</a></li>
+                </ul>
+            </div>
+
+            <!-- 一、功能介紹 -->
+            <div class="section" id="intro">
+                <h2 class="section-title">
+                    <span class="icon">✨</span>
+                    一、功能介紹
+                </h2>
+
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📄</div>
+                        <div class="feature-title">多格式支援</div>
+                        <div class="feature-description">支援 TXT 和 CSV 檔案，自動偵測編碼（UTF-8、Big5、GBK），避免亂碼問題</div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-title">智慧填寫</div>
+                        <div class="feature-description">根據自訂規則將資料填入 Excel 模板，完整保留原始格式與樣式</div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">💾</div>
+                        <div class="feature-title">設定檔管理</div>
+                        <div class="feature-description">儲存常用設定為設定檔，支援多產品管理、重命名、刪除等完整功能</div>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <div class="feature-title">跨工作表填寫</div>
+                        <div class="feature-description">支援在多個工作表中填寫資料，自動計算相對位置，適應不同結構</div>
+                    </div>
+                </div>
+
+                <!-- 主介面示意 -->
+                <div class="ui-mockup">
+                    <div class="ui-header">📱 應用程式主介面</div>
+
+                    <div class="step-indicator">
+                        <div class="step-item active">
+                            <div class="step-circle">1</div>
+                            <div class="step-label">上傳資料</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-circle">2</div>
+                            <div class="step-label">上傳模板</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-circle">3</div>
+                            <div class="step-label">設定規則</div>
+                        </div>
+                        <div class="step-item">
+                            <div class="step-circle">4</div>
+                            <div class="step-label">執行填入</div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 2rem;">
+                        <p style="color: #64748b; text-align: center; font-size: 0.95rem;">
+                            清晰的步驟指示器引導您完成整個流程
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 二、基本操作流程 -->
+            <div class="section" id="basic">
+                <h2 class="section-title">
+                    <span class="icon">📋</span>
+                    二、基本操作流程
+                </h2>
+
+                <!-- 步驟 1 -->
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">上傳資料來源</h3>
+                    <div class="step-description">
+                        點擊「上傳 TXT/CSV 檔案」按鈕，選擇您的資料檔案。
+                    </div>
+
+                    <div class="ui-mockup">
+                        <div class="upload-zone">
+                            <div class="upload-icon">📁</div>
+                            <div class="upload-text">
+                                <strong>拖曳檔案到此處</strong><br>
+                                或點擊選擇 TXT / CSV 檔案
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips">
+                        <div class="tips-title">💡 支援的檔案格式</div>
+                        <div class="tips-content">
+                            <ul>
+                                <li><strong>TXT 檔案</strong>：純文字檔，每行代表一筆數據</li>
+                                <li><strong>CSV 檔案</strong>：多欄位數據，上傳後可選擇要匯入的欄位</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p><strong>CSV 檔案特別說明：</strong></p>
+                    <p>上傳 CSV 檔案後，系統會彈出欄位選擇視窗，讓您選擇要匯入哪些欄位。</p>
+
+                    <div class="modal-demo">
+                        <div class="modal-title">
+                            <span>選擇要匯入的欄位</span>
+                            <span style="cursor: pointer; color: #94a3b8;">✕</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <label
+                                style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" checked style="width: 18px; height: 18px;">
+                                <span>產品編號</span>
+                            </label>
+                            <label
+                                style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" checked style="width: 18px; height: 18px;">
+                                <span>測量數據</span>
+                            </label>
+                            <label
+                                style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; cursor: pointer;">
+                                <input type="checkbox" style="width: 18px; height: 18px;">
+                                <span>備註</span>
+                            </label>
+                        </div>
+                        <button class="btn btn-primary" style="width: 100%;">確認</button>
+                    </div>
+                </div>
+
+                <!-- 步驟 2 -->
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">上傳 Excel 模板</h3>
+                    <div class="step-description">
+                        點擊「上傳 Excel 模板」按鈕，選擇您的報告模板檔案（.xlsx）。
+                    </div>
+
+                    <div class="ui-mockup">
+                        <div class="upload-zone">
+                            <div class="upload-icon">📊</div>
+                            <div class="upload-text">
+                                <strong>上傳 Excel 模板</strong><br>
+                                支援 .xlsx 格式
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips">
+                        <div class="tips-title">💡 模板要求</div>
+                        <div class="tips-content">
+                            <ul>
+                                <li>支援 .xlsx 格式（Excel 2007 以上）</li>
+                                <li>可包含多個工作表</li>
+                                <li>系統會完整保留格式、樣式、圖片等</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p>上傳成功後，系統會顯示資料預覽：</p>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>資料內容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>0.245</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>0.238</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>0.251</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align: center; color: #94a3b8;">
+                                    ... 共 150 筆資料
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 步驟 3 -->
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">設定填寫規則</h3>
+                    <div class="step-description">
+                        點擊「新增規則」按鈕，定義資料如何填入 Excel。
+                    </div>
+
+                    <div class="ui-mockup">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h4 style="color: #1e293b; font-size: 1.1rem;">填寫規則</h4>
+                            <button class="btn btn-primary">+ 新增規則</button>
+                        </div>
+
+                        <div
+                            style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; border: 2px solid #e2e8f0;">
+                            <div
+                                style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem;">
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569;">工作表</label>
+                                    <select
+                                        style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+                                        <option>Sheet1</option>
+                                        <option>Sheet2</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569;">起始儲存格</label>
+                                    <input type="text" value="I26"
+                                        style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+                                </div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569;">每頁筆數</label>
+                                    <input type="number" value="50"
+                                        style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+                                </div>
+                                <div>
+                                    <label
+                                        style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569;">填寫方向</label>
+                                    <select
+                                        style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 6px;">
+                                        <option>向下</option>
+                                        <option>向右</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tips">
+                        <div class="tips-title">💡 多規則設定</div>
+                        <div class="tips-content">
+                            您可以新增多個規則，將不同的資料填入不同的工作表或位置。系統會按順序執行所有規則。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 步驟 4 -->
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">執行填入並下載</h3>
+                    <div class="step-description">
+                        設定完成後，點擊「開始執行填入」按鈕。處理完成後，新的 Excel 檔案將自動下載。
+                    </div>
+
+                    <div class="ui-mockup">
+                        <div class="button-group">
+                            <button class="btn btn-primary" style="flex: 1;">
+                                ▶️ 開始執行填入
+                            </button>
+                            <button class="btn btn-outline">
+                                🔄 重置所有設定
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="warning">
+                        <div class="warning-title">⚠️ 注意事項</div>
+                        <div class="warning-content">
+                            <ul>
+                                <li>原始的 Excel 檔案<strong>不會被修改</strong>，系統會產生一個新的檔案</li>
+                                <li>處理大量資料時可能需要等待數秒</li>
+                                <li>下載的檔案名稱會自動加上時間戳記</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 三、設定檔管理 -->
+            <div class="section" id="profile">
+                <h2 class="section-title">
+                    <span class="icon">💾</span>
+                    三、設定檔管理（多產品支援）
+                </h2>
+
+                <p style="margin-bottom: 2rem;">
+                    設定檔管理功能讓您可以將常用的設定儲存為「設定檔」，方便日後快速套用。支援管理多個產品的設定檔庫。
+                </p>
+
+                <!-- 3.1 儲存設定 -->
+                <div class="step">
+                    <h3 class="step-title">3.1 儲存設定</h3>
+                    <div class="step-description">
+                        在「設定檔管理」區塊中，輸入設定名稱（例如：產品A-001），然後選擇儲存方式。
+                    </div>
+
+                    <div class="ui-mockup">
+                        <div class="ui-header">💾 設定檔管理（多產品支援）</div>
+
+                        <div style="margin-bottom: 1.5rem;">
+                            <label
+                                style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: #475569;">設定名稱</label>
+                            <input type="text" placeholder="品號+後綴名(視需要設定)"
+                                style="width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.95rem;">
+                        </div>
+
+                        <div class="button-group">
+                            <button class="btn btn-primary">
+                                💾 新建檔案
+                            </button>
+                            <button class="btn btn-secondary">
+                                💾 加入現有
+                            </button>
+                            <button class="btn btn-outline">
+                                📂 載入設定檔
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="tips">
+                        <div class="tips-title">💡 設定檔庫的概念</div>
+                        <div class="tips-content">
+                            一個設定檔庫（JSON 檔案）可以包含多個產品的設定。例如：
+                            <ul>
+                                <li><code>產品系列A.json</code> 包含：A-001、A-002、A-003...</li>
+                                <li><code>產品系列B.json</code> 包含：B-101、B-102、B-103...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3.2 載入設定 -->
+                <div class="step">
+                    <h3 class="step-title">3.2 載入設定檔</h3>
+                    <div class="step-description">
+                        點擊「載入設定檔」按鈕，選擇您之前儲存的設定檔。
+                    </div>
+
+                    <p><strong>載入設定檔庫時，會彈出產品選擇視窗：</strong></p>
+
+                    <div class="modal-demo">
+                        <div class="modal-title">
+                            <span>選擇設定檔</span>
+                            <span style="cursor: pointer; color: #94a3b8;">✕</span>
+                        </div>
+
+                        <div class="profile-item selected">
+                            <span style="font-weight: 600; color: #1e293b;">產品 A-001</span>
+                            <div class="profile-actions">
+                                <button class="icon-btn edit" title="重命名">✏️</button>
+                                <button class="icon-btn delete" title="刪除">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="profile-item">
+                            <span style="color: #64748b;">產品 A-002</span>
+                            <div class="profile-actions">
+                                <button class="icon-btn edit" title="重命名">✏️</button>
+                                <button class="icon-btn delete" title="刪除">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div class="profile-item">
+                            <span style="color: #64748b;">產品 A-003</span>
+                            <div class="profile-actions">
+                                <button class="icon-btn edit" title="重命名">✏️</button>
+                                <button class="icon-btn delete" title="刪除">🗑️</button>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 1.5rem;">
+                            <button class="btn btn-primary" style="width: 100%;">✓ 確認載入</button>
+                        </div>
+                    </div>
+
+                    <div class="tips">
+                        <div class="tips-title">💡 自動套用</div>
+                        <div class="tips-content">
+                            如果您在上傳資料來源後直接載入設定檔，系統會自動套用設定。如果 Excel 模板尚未上傳，系統會快取設定檔，等您上傳 Excel 後自動繼續。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3.3 管理設定檔 -->
+                <div class="step">
+                    <h3 class="step-title">3.3 管理設定檔（重命名與刪除）</h3>
+                    <div class="step-description">
+                        在產品選擇對話框中，您可以直接管理設定檔。
+                    </div>
+
+                    <p><strong>重命名設定檔：</strong></p>
+                    <ol>
+                        <li>將滑鼠移到設定檔名稱上</li>
+                        <li>點擊出現的鉛筆圖示 ✏️</li>
+                        <li>輸入新的名稱</li>
+                        <li>點擊打勾 ✅ 確認</li>
+                    </ol>
+
+                    <div class="modal-demo">
+                        <div style="background: #f0f4ff; padding: 1rem; border-radius: 8px; border: 2px solid #667eea;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <input type="text" value="產品 A-001 (新名稱)"
+                                    style="flex: 1; padding: 0.5rem; border: 2px solid #667eea; border-radius: 6px; font-weight: 600;">
+                                <button class="icon-btn" style="background: #10b981; color: white;">✓</button>
+                                <button class="icon-btn" style="background: #94a3b8; color: white;">✕</button>
+                            </div>
+                        </div>
+                        <p style="text-align: center; color: #64748b; font-size: 0.9rem; margin-top: 1rem;">
+                            編輯模式示意
+                        </p>
+                    </div>
+
+                    <p><strong>刪除設定檔：</strong></p>
+                    <ol>
+                        <li>將滑鼠移到設定檔名稱上</li>
+                        <li>點擊垃圾桶圖示 🗑️</li>
+                        <li>在確認對話框中點擊「確定」</li>
+                    </ol>
+
+                    <div class="warning">
+                        <div class="warning-title">⚠️ 重要提醒</div>
+                        <div class="warning-content">
+                            <ul>
+                                <li>所有修改（重命名/刪除）會<strong>立即寫入檔案</strong>，無法復原</li>
+                                <li>建議定期備份重要的設定檔庫</li>
+                                <li>刪除設定檔後，該設定將永久消失</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 四、進階功能 -->
+            <div class="section" id="advanced">
+                <h2 class="section-title">
+                    <span class="icon">🚀</span>
+                    四、進階功能
+                </h2>
+
+                <!-- 4.1 跨工作表填寫 -->
+                <div class="step">
+                    <h3 class="step-title">4.1 跨工作表填寫</h3>
+                    <div class="step-description">
+                        設定檔支援「相對工作表位置」，可以自動適應不同的工作表結構。
+                    </div>
+
+                    <p><strong>運作原理：</strong></p>
+                    <p>
+                        假設您的設定檔是基於一個有 10 個工作表的 Excel 建立的：
+                    </p>
+                    <ul>
+                        <li>規則 1 填寫到「第 5 張工作表」</li>
+                        <li>規則 2 填寫到「第 6 張工作表」</li>
+                    </ul>
+
+                    <p>
+                        當您載入這個設定檔到一個只有 8 個工作表的 Excel 時，系統會自動計算相對位置，確保規則仍然正確執行。
+                    </p>
+
+                    <div class="tips">
+                        <div class="tips-title">💡 使用建議</div>
+                        <div class="tips-content">
+                            這個功能特別適合處理結構相似但工作表數量不同的 Excel 模板。
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4.2 自動編碼偵測 -->
+                <div class="step">
+                    <h3 class="step-title">4.2 自動編碼偵測</h3>
+                    <div class="step-description">
+                        系統會自動偵測 TXT/CSV 檔案的編碼格式，避免亂碼問題。
+                    </div>
+
+                    <p><strong>支援的編碼：</strong></p>
+                    <ul>
+                        <li>UTF-8（最常見）</li>
+                        <li>Big5（繁體中文）</li>
+                        <li>GBK（簡體中文）</li>
+                        <li>其他常見編碼</li>
+                    </ul>
+
+                    <p>
+                        上傳檔案後，系統會在 Console 中顯示偵測到的編碼（例如：<code>Detected encoding: Big5</code>）。
+                    </p>
+                </div>
+
+                <!-- 4.3 格式保留 -->
+                <div class="step">
+                    <h3 class="step-title">4.3 格式保留</h3>
+                    <div class="step-description">
+                        系統會完整保留 Excel 模板的所有格式與樣式。
+                    </div>
+
+                    <p><strong>保留的內容包括：</strong></p>
+                    <ul>
+                        <li>儲存格格式（字體、顏色、對齊方式等）</li>
+                        <li>合併儲存格</li>
+                        <li>圖片與圖表</li>
+                        <li>公式（不會被覆蓋）</li>
+                        <li>工作表保護設定</li>
+                    </ul>
+
+                    <div class="tips">
+                        <div class="tips-title">💡 字體顏色</div>
+                        <div class="tips-content">
+                            系統會將填入的數據字體設定為黑色，確保列印時清晰可見。
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 五、常見問題 -->
+            <div class="section" id="troubleshooting">
+                <h2 class="section-title">
+                    <span class="icon">❓</span>
+                    五、常見問題
+                </h2>
+
+                <div class="step">
+                    <h3 class="step-title">Q1: 為什麼設定檔管理功能無法使用？</h3>
+                    <p><strong>A:</strong> 設定檔管理功能需要瀏覽器支援 File System Access API。請使用以下瀏覽器：</p>
+                    <ul>
+                        <li>✅ Chrome 86 以上版本</li>
+                        <li>✅ Edge 86 以上版本</li>
+                        <li>❌ Firefox（不支援）</li>
+                        <li>❌ Safari（不支援）</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3 class="step-title">Q2: 上傳的 TXT 檔案出現亂碼怎麼辦？</h3>
+                    <p><strong>A:</strong> 系統會自動偵測編碼，但如果仍然出現亂碼，請嘗試：</p>
+                    <ul>
+                        <li>將檔案另存為 UTF-8 編碼</li>
+                        <li>檢查檔案是否包含特殊字元</li>
+                        <li>查看 Console 中顯示的偵測編碼是否正確</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3 class="step-title">Q3: 可以一次處理多個 Excel 檔案嗎？</h3>
+                    <p><strong>A:</strong> 目前版本僅支援單一 Excel 檔案處理。如需批次處理，請分別上傳並執行。</p>
+                </div>
+
+                <div class="step">
+                    <h3 class="step-title">Q4: 設定檔儲存在哪裡？</h3>
+                    <p><strong>A:</strong> 設定檔是 JSON 格式的檔案，儲存位置由您在儲存時選擇。建議：</p>
+                    <ul>
+                        <li>建立專門的資料夾管理設定檔</li>
+                        <li>使用有意義的檔名（例如：產品系列A.json）</li>
+                        <li>定期備份重要的設定檔</li>
+                    </ul>
+                </div>
+
+                <div class="step">
+                    <h3 class="step-title">Q5: 如何確認設定檔已成功儲存？</h3>
+                    <p><strong>A:</strong> 儲存成功後會彈出確認訊息。您也可以：</p>
+                    <ul>
+                        <li>檢查儲存位置是否有該 JSON 檔案</li>
+                        <li>使用「載入設定檔」功能測試</li>
+                        <li>用文字編輯器開啟 JSON 檔案查看內容</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 結尾 -->
+            <div style="text-align: center; padding: 3rem 0; border-top: 2px solid #e2e8f0; margin-top: 3rem;">
+                <h3 style="color: #667eea; margin-bottom: 1rem;">感謝使用 Txt2Excel v3.0！</h3>
+                <p style="color: #64748b;">如有任何問題或建議，歡迎回饋。</p>
+                <p style="color: #94a3b8; font-size: 0.9rem; margin-top: 1rem;">
+                    © 2026 Wesley Chang @ Mouldex | MIT License
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

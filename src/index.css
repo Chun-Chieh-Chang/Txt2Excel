@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* === AI_FONT_START === */
+/* presetId: apple-system */
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, "Cascadia Mono", monospace;
+  --tracking-display: -0.04em;
+  --tracking-head: -0.025em;
+  --tracking-title: -0.015em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.06em;
+  --leading-display: 1.05;
+  --leading-h1: 1.1;
+  --leading-h2: 1.14;
+  --leading-h3: 1.18;
+  --leading-h4: 1.22;
+  --leading-h5: 1.26;
+  --leading-h6: 1.3;
+  --leading-body: 1.58;
+  --leading-relaxed: 1.72;
+  --leading-tight: 1.35;
+
+  /* Light Mode (Miyazaki Day: Sky Blue, Cloud White, Grass Green) */
+  --slate-50: #f0f8ff;
+  /* Alice Blue (Clouds) */
+  --slate-100: #e0f6ff;
+  /* Soft Sky */
+  --slate-200: #bce9ff;
+  /* Bright Sky */
+  --slate-300: #89cff0;
+  /* Baby Blue */
+  --slate-400: #6495ed;
+  /* Cornflower Blue */
+  --slate-500: #556b2f;
+  /* Dark Olive (Grass Shadow) */
+  --slate-600: #2e8b57;
+  /* Sea Green (Foliage) */
+  --slate-700: #228b22;
+  /* Forest Green */
+  --slate-800: #006400;
+  /* Dark Green */
+  --slate-900: #191970;
+  /* Midnight Blue (Text contrast) */
+  --slate-950: #000080;
+  /* Navy */
+}
+
+.dark {
+  /* Dark Mode (Master Design: Mystical Deep Forest & Spirit Gold) */
+  /* A richer, deeper, more magical night palette */
+
+  --slate-50: #f0fdf4;
+  /* Mint White (High Highlight) */
+  --slate-100: #d1fae5;
+  /* Soft Mint (Text Base) */
+  --slate-200: #a7f3d0;
+  /* Pale Emerald */
+  --slate-300: #6ee7b7;
+  /* Bright Emerald */
+  --slate-400: #34d399;
+  /* Magic Green */
+  --slate-500: #fbbf24;
+  /* Spirit Amber (Warm Accent/Buttons) */
+  --slate-600: #d97706;
+  /* Deep Amber (Button Text/Hover) */
+
+  /* Backgrounds - Deep Rich Pine/Jungle */
+  --slate-700: #064e3b;
+  /* Mossy Card Bg */
+  --slate-800: #063830;
+  /* Deep Card Overlay */
+  --slate-900: #022c22;
+  /* Forest Depth */
+  --slate-950: #011510;
+  /* Void Green (Main Bg) */
+}
+
+/* Animations */
+@keyframes float-cloud {
+  0% {
+    transform: translateX(-100%) translateY(0);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translateX(50vw) translateY(-10px);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translateX(100vw) translateY(0);
+    opacity: 0.8;
+  }
+}
+
+@keyframes float-spirit {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+    opacity: 0.6;
+  }
+}
+
+/* Global Font Boost */
+html {
+  font-size: 18px;
+  /* Base size increase from default 16px */
+}
+
+/* Global font binding (so variables actually affect the app) */
+html,
+body {
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--font-mono);
+}
+
+/* === AI_FONT_END === */
