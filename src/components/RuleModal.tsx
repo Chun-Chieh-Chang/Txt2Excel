@@ -31,19 +31,19 @@ export default function RuleModal({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4 animate-in fade-in">
-            <div className="w-full max-w-lg rounded-3xl bg-white p-8 shadow-2xl animate-in zoom-in-95 duration-200 dark:bg-slate-800">
-                <h3 className="mb-6 text-xl font-bold text-slate-900 dark:text-slate-100">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1A202C66] backdrop-blur-sm p-4 animate-in fade-in">
+            <div className="w-full max-w-lg rounded-2xl bg-white p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] animate-in zoom-in-95 duration-200">
+                <h3 className="mb-6 text-[20px] font-bold text-[#333333]">
                     {editingRuleId ? '編輯規則' : '新增填入規則'}
                 </h3>
 
-                <div className="space-y-5">
-                    <div>
-                        <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">選擇工作表</label>
+                <div className="flex flex-col gap-5">
+                    <div className="flex flex-col gap-2">
+                        <label className="text-[12px] font-semibold text-[#888888] uppercase tracking-wider">選擇工作表</label>
                         <select
                             value={ruleForm.worksheet}
                             onChange={(e) => setRuleForm({ ...ruleForm, worksheet: e.target.value })}
-                            className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium transition-all hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/10 dark:border-slate-700 dark:bg-slate-700 dark:text-slate-100"
+                            className="w-full rounded-xl border border-[#E6E8EB] bg-[#F8FAFC] px-4 py-3 text-[14px] focus:outline-none focus:border-[#2D76FC] transition-colors"
                         >
                             {worksheets.slice(-10).map(ws => (
                                 <option key={ws} value={ws}>{ws}</option>
@@ -52,12 +52,12 @@ export default function RuleModal({
                     </div>
 
                     {!Array.isArray(parsedData) && (
-                        <div>
-                            <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">資料來源 (欄位)</label>
+                        <div className="flex flex-col gap-2">
+                            <label className="text-[12px] font-semibold text-[#888888] uppercase tracking-wider">資料來源 (欄位)</label>
                             <select
                                 value={ruleForm.source}
                                 onChange={(e) => setRuleForm({ ...ruleForm, source: e.target.value })}
-                                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium transition-all hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/10 dark:border-slate-700 dark:bg-slate-700 dark:text-slate-100"
+                                className="w-full rounded-xl border border-[#E6E8EB] bg-[#F8FAFC] px-4 py-3 text-[14px] focus:outline-none focus:border-[#2D76FC] transition-colors"
                             >
                                 {Object.keys(parsedData).map(key => {
                                     const firstValue = (parsedData as Record<string, string[]>)[key]?.[0] || '無數據';
@@ -72,36 +72,34 @@ export default function RuleModal({
                     )}
 
                     <div className="grid grid-cols-2 gap-4">
-                        <div>
-                            <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">起始儲存格 (如 I26)</label>
+                        <div className="flex flex-col gap-2">
+                            <label className="text-[12px] font-semibold text-[#888888] uppercase tracking-wider">起始標頭 (如 I26)</label>
                             <input
                                 type="text"
                                 value={ruleForm.startCell}
                                 onChange={(e) => setRuleForm({ ...ruleForm, startCell: e.target.value.toUpperCase() })}
-                                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium transition-all hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/10 dark:border-slate-700 dark:bg-slate-700 dark:text-slate-100"
+                                className="w-full rounded-xl border border-[#E6E8EB] bg-[#F8FAFC] px-4 py-3 text-[14px] focus:outline-none focus:border-[#2D76FC] transition-colors"
                                 placeholder="例如 I26"
                             />
                         </div>
-                        <div>
-                            <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">
-                                <span className="flex items-center gap-1">每頁筆數</span>
-                            </label>
+                        <div className="flex flex-col gap-2">
+                            <label className="text-[12px] font-semibold text-[#888888] uppercase tracking-wider">每頁筆數</label>
                             <input
                                 type="number"
                                 value={ruleForm.rowCount}
                                 onChange={(e) => setRuleForm({ ...ruleForm, rowCount: e.target.value })}
-                                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-medium transition-all hover:border-blue-300 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-500/10 dark:border-slate-700 dark:bg-slate-700 dark:text-slate-100"
+                                className="w-full rounded-xl border border-[#E6E8EB] bg-[#F8FAFC] px-4 py-3 text-[14px] focus:outline-none focus:border-[#2D76FC] transition-colors"
                             />
                         </div>
                     </div>
 
-                    <div>
-                        <label className="mb-2 block text-sm font-semibold text-slate-700 dark:text-slate-300">填入方向</label>
+                    <div className="flex flex-col gap-2">
+                        <label className="text-[12px] font-semibold text-[#888888] uppercase tracking-wider">填入方向</label>
                         <select
                             disabled
-                            className="w-full cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-4 py-3 text-sm font-medium text-slate-500 dark:border-slate-700 dark:bg-slate-700 dark:text-slate-400"
+                            className="w-full cursor-not-allowed rounded-xl border border-[#E6E8EB] bg-[#EDF2F7] px-4 py-3 text-[14px] text-[#A0AEC0]"
                         >
-                            <option value="horizontal">橫向（每隔一列用一格）</option>
+                            <option value="horizontal">橫向（間隔列填寫模式）</option>
                         </select>
                     </div>
                 </div>
@@ -109,13 +107,13 @@ export default function RuleModal({
                 <div className="mt-8 flex gap-3">
                     <button
                         onClick={onClose}
-                        className="flex-1 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                        className="flex-1 py-3 px-4 rounded-xl border border-[#E6E8EB] bg-white text-[#333333] font-bold text-[14px] transition-all hover:bg-[#F8FAFC]"
                     >
                         取消
                     </button>
                     <button
                         onClick={onSave}
-                        className="flex-1 rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white shadow-lg shadow-blue-500/20 hover:bg-blue-700"
+                        className="flex-1 py-3 px-4 rounded-xl bg-[#2D76FC] text-white font-bold text-[14px] shadow-[0_10px_20px_rgba(45,118,252,0.2)] transition-all hover:bg-[#1B65ED]"
                     >
                         確認
                     </button>

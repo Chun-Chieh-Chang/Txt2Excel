@@ -2,141 +2,153 @@
 @tailwind components;
 @tailwind utilities;
 
-/* === AI_FONT_START === */
-/* presetId: apple-system */
 :root {
-  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Monaco, "Cascadia Mono", monospace;
-  --tracking-display: -0.04em;
-  --tracking-head: -0.025em;
-  --tracking-title: -0.015em;
-  --tracking-normal: 0em;
-  --tracking-wide: 0.06em;
-  --leading-display: 1.05;
-  --leading-h1: 1.1;
-  --leading-h2: 1.14;
-  --leading-h3: 1.18;
-  --leading-h4: 1.22;
-  --leading-h5: 1.26;
-  --leading-h6: 1.3;
-  --leading-body: 1.58;
-  --leading-relaxed: 1.72;
-  --leading-tight: 1.35;
-
-  /* Light Mode (Miyazaki Day: Sky Blue, Cloud White, Grass Green) */
-  --slate-50: #f0f8ff;
-  /* Alice Blue (Clouds) */
-  --slate-100: #e0f6ff;
-  /* Soft Sky */
-  --slate-200: #bce9ff;
-  /* Bright Sky */
-  --slate-300: #89cff0;
-  /* Baby Blue */
-  --slate-400: #6495ed;
-  /* Cornflower Blue */
-  --slate-500: #556b2f;
-  /* Dark Olive (Grass Shadow) */
-  --slate-600: #2e8b57;
-  /* Sea Green (Foliage) */
-  --slate-700: #228b22;
-  /* Forest Green */
-  --slate-800: #006400;
-  /* Dark Green */
-  --slate-900: #191970;
-  /* Midnight Blue (Text contrast) */
-  --slate-950: #000080;
-  /* Navy */
+  /* Artistic Color Palette */
+  --master-blue-deep: #08739D;
+  --master-blue-steel: #4984AC;
+  --master-bg-soft: #E7EEF8;
+  --master-green-olive: #6D9D39;
+  --master-lime-bright: #AEC60C;
+  
+  --text-main: #1A3A4A;
+  --text-secondary: #5A7A8A;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --glass-bg: rgba(231, 238, 248, 0.6);
+  --shadow-art-val: 0 12px 40px rgba(8, 115, 157, 0.12);
+  
+  --font-sans: 'MiSans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-.dark {
-  /* Dark Mode (Master Design: Mystical Deep Forest & Spirit Gold) */
-  /* A richer, deeper, more magical night palette */
-
-  --slate-50: #f0fdf4;
-  /* Mint White (High Highlight) */
-  --slate-100: #d1fae5;
-  /* Soft Mint (Text Base) */
-  --slate-200: #a7f3d0;
-  /* Pale Emerald */
-  --slate-300: #6ee7b7;
-  /* Bright Emerald */
-  --slate-400: #34d399;
-  /* Magic Green */
-  --slate-500: #fbbf24;
-  /* Spirit Amber (Warm Accent/Buttons) */
-  --slate-600: #d97706;
-  /* Deep Amber (Button Text/Hover) */
-
-  /* Backgrounds - Deep Rich Pine/Jungle */
-  --slate-700: #064e3b;
-  /* Mossy Card Bg */
-  --slate-800: #063830;
-  /* Deep Card Overlay */
-  --slate-900: #022c22;
-  /* Forest Depth */
-  --slate-950: #011510;
-  /* Void Green (Main Bg) */
-}
-
-/* Animations */
-@keyframes float-cloud {
-  0% {
-    transform: translateX(-100%) translateY(0);
-    opacity: 0.8;
-  }
-
-  50% {
-    transform: translateX(50vw) translateY(-10px);
-    opacity: 0.9;
-  }
-
-  100% {
-    transform: translateX(100vw) translateY(0);
-    opacity: 0.8;
-  }
-}
-
-@keyframes float-spirit {
-
-  0%,
-  100% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 0.3;
-  }
-
-  50% {
-    transform: translateY(-20px) rotate(5deg);
-    opacity: 0.6;
-  }
-}
-
-/* Global Font Boost */
-html {
-  font-size: 18px;
-  /* Base size increase from default 16px */
-}
-
-/* Global font binding (so variables actually affect the app) */
-html,
 body {
   font-family: var(--font-sans);
+  background: linear-gradient(135deg, #F0F4F8 0%, var(--master-bg-soft) 100%);
+  color: var(--text-main);
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-display);
+@layer utilities {
+  .shadow-art {
+    shadow: var(--shadow-art-val);
+  }
 }
 
-code,
-pre,
-kbd,
-samp {
-  font-family: var(--font-mono);
+@layer components {
+  /* Master Header */
+  .header-card {
+    @apply flex justify-between items-center bg-white px-10 py-6 rounded-[24px] border border-white/60 backdrop-blur-xl sticky top-4 mx-8 z-50;
+    box-shadow: var(--shadow-art-val);
+    background: linear-gradient(to right, #ffffff, var(--master-bg-soft));
+  }
+
+  /* Master Stepper */
+  .stepper-pro {
+    @apply flex justify-between items-center px-[80px] relative mb-12;
+  }
+
+  .stepper-pro::before {
+    content: '';
+    @apply absolute top-6 left-[120px] right-[120px] h-[3px] -z-10;
+    background: linear-gradient(to right, #D1D9E6, var(--master-bg-soft), #D1D9E6);
+  }
+
+  .step-circle-pro {
+    @apply w-14 h-14 rounded-full bg-white border-2 border-[#D1D9E6] flex items-center justify-center text-xl text-[#A0AEC0] font-bold transition-all duration-500 shadow-md;
+  }
+
+  .step-item-pro.active .step-circle-pro {
+    @apply border-none text-white shadow-[0_8px_20px_rgba(8,115,157,0.3)];
+    background: linear-gradient(135deg, var(--master-blue-deep) 0%, var(--master-blue-steel) 100%);
+    transform: scale(1.1);
+  }
+
+  .step-item-pro.completed .step-circle-pro {
+    @apply border-none text-white;
+    background: linear-gradient(135deg, var(--master-green-olive) 0%, var(--master-lime-bright) 100%);
+  }
+
+  /* Master Cards */
+  .pro-card {
+    @apply bg-white rounded-[32px] p-8 border border-white/80 backdrop-blur-sm transition-all duration-500 hover:-translate-y-1;
+    box-shadow: var(--shadow-art-val);
+    background: linear-gradient(145deg, #ffffff 0%, #F9FBFF 100%);
+  }
+  
+  .pro-card:hover {
+    box-shadow: 0 20px 50px rgba(8, 115, 157, 0.15);
+  }
+
+  /* Artistic Upload Area */
+  .pro-upload-area {
+    @apply border-2 border-dashed border-[#B8C6D9] rounded-[24px] bg-[#F1F5F9]/50 h-[180px] flex flex-col items-center justify-center cursor-pointer transition-all duration-500 relative overflow-hidden active:scale-[0.98];
+  }
+  
+  .pro-upload-area::after {
+    content: '';
+    @apply absolute inset-0 opacity-0 bg-gradient-to-br from-[var(--master-blue-deep)] to-[var(--master-lime-bright)] transition-opacity duration-300 pointer-events-none;
+  }
+  
+  .pro-upload-area:hover {
+    @apply border-transparent shadow-[0_8px_25px_rgba(8,115,157,0.1)];
+    background: white;
+  }
+
+  /* Master Execution Button */
+  .execute-btn-pro {
+    @apply text-white py-5 px-16 rounded-[100px] text-xl font-black cursor-pointer shadow-[0_15px_30px_rgba(8,115,157,0.25)] flex items-center gap-4 transition-all duration-500 uppercase tracking-[0.2em] relative overflow-hidden;
+    background: linear-gradient(135deg, var(--master-blue-deep) 0%, var(--master-blue-steel) 50%, var(--master-green-olive) 100%);
+    background-size: 200% auto;
+  }
+  
+  .execute-btn-pro:hover {
+    background-position: right center;
+    @apply shadow-[0_20px_40px_rgba(109,157,57,0.3)] -translate-y-1;
+  }
+
+  /* Decoration Particles */
+  .decoration-circle {
+    @apply fixed rounded-full mix-blend-multiply filter blur-[80px] opacity-[0.15] animate-pulse -z-10;
+  }
+  
+  .d1 {
+    @apply w-[600px] h-[600px] -top-[200px] -left-[100px];
+    background: var(--master-blue-deep);
+  }
+  
+  .d2 {
+    @apply w-[500px] h-[500px] -bottom-[100px] -right-[50px];
+    background: var(--master-lime-bright);
+    animation-delay: 1s;
+  }
+  
+  .d3 {
+    @apply w-[400px] h-[400px] top-[40%] right-[10%];
+    background: var(--master-blue-steel);
+    animation-delay: 2s;
+  }
+
+  /* Utility & Badge */
+  .icon-btn-pro {
+    @apply w-12 h-12 rounded-2xl bg-white border border-[#E1E8F0] text-[var(--master-blue-steel)] flex items-center justify-center text-2xl cursor-pointer transition-all duration-300 hover:bg-[var(--master-blue-deep)] hover:text-white hover:border-transparent hover:rotate-6 shadow-sm;
+  }
+
+  .badge-pro {
+    @apply px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase shadow-sm;
+  }
 }
 
-/* === AI_FONT_END === */
+/* Custom Scrollbar - Minimal Master style */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--master-blue-steel);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--master-blue-deep);
+}

@@ -1,24 +1,44 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Txt2Excel - Intelligent Data Transformation</title>
+    <meta name="description" content="Generated with Codia" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @font-face {
+        font-family: "MiSans";
+        src: url("https://assets-persist.lovart.ai/agent-static-assets/MiSans-Regular.ttf")
+          format("truetype");
+        font-weight: normal;
+      }
+      @font-face {
+        font-family: "MiSans";
+        src: url("https://assets-persist.lovart.ai/agent-static-assets/MiSans-Medium.ttf")
+          format("truetype");
+        font-weight: 500;
+      }
+      @font-face {
+        font-family: "MiSans";
+        src: url("https://assets-persist.lovart.ai/agent-static-assets/MiSans-Bold.ttf")
+          format("truetype");
+        font-weight: 700;
+      }
+    </style>
+    <script>
+      try {
+        localStorage.removeItem("theme");
+        document.documentElement.classList.remove("dark");
+      } catch (e) {}
+    </script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Txt2Excel Web Tool</title>
-  <meta name="description" content="Generated with Codia" />
-  <!-- CODIA_PUBLISH_META_START -->
-  <!-- CODIA_PUBLISH_META_END -->
-  <script>
-    try {
-      localStorage.removeItem('theme');
-      document.documentElement.classList.remove('dark');
-    } catch (e) {}
-  </script>
-</head>
-
-<body>
-  <div id="root"></div>
-  <script type="module" src="/src/main.tsx"></script>
-</body>
-
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

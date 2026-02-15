@@ -1,109 +1,111 @@
 
-import { FileText, Upload, Trash2, FileSpreadsheet } from 'lucide-react';
-import { ParsedData } from '../types';
+import React from 'react';
 
 interface FileUploadProps {
     dataFile: File | null;
     excelFile: File | null;
-    parsedData: ParsedData;
+    parsedData: any;
     onDataUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onExcelUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onClearData: () => void;
     onClearExcel: () => void;
 }
 
-export default function FileUpload({
+const FileUpload: React.FC<FileUploadProps> = ({
     dataFile,
     excelFile,
-    parsedData,
     onDataUpload,
     onExcelUpload,
     onClearData,
     onClearExcel
-}: FileUploadProps) {
+}) => {
     return (
-        <>
-            {/* 1. Data Upload (TXT/CSV) */}
-            <div className={`group relative overflow-hidden rounded-2xl border bg-white/60 p-1 transition-all duration-300 backdrop-blur-sm ${!dataFile ? 'border-dashed border-slate-300 hover:border-rose-400' : 'border-solid border-rose-200 shadow-xl shadow-rose-100/20'} dark:bg-slate-800/60 dark:border-slate-700 dark:hover:border-emerald-500/50`}>
-                {dataFile ? (
-                    <div className="flex items-center justify-between gap-4 p-5">
-                        <div className="flex items-center gap-4">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-rose-50 text-rose-600 dark:bg-emerald-900/20 dark:text-emerald-400">
-                                <FileText className="h-6 w-6" />
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-slate-900 line-clamp-1 dark:text-slate-100">{dataFile.name}</h3>
-                                <p className="text-xs font-medium text-slate-500 dark:text-slate-400">
-                                    {Array.isArray(parsedData) ? `${parsedData.length} 筆資料` : `${Object.keys(parsedData).length} 個資料欄位`}
-                                </p>
-                            </div>
-                        </div>
-                        <button onClick={onClearData} className="rounded-lg p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-500 dark:text-slate-300 dark:hover:bg-red-900/20 dark:hover:text-red-400">
-                            <Trash2 className="h-5 w-5" />
-                        </button>
+        <div className="flex flex-col gap-8">
+            {/* Data File Card */}
+            <div className="pro-card">
+                <div className="flex justify-between items-center mb-2">
+                    <div className="text-xl font-black text-[#08739D] flex items-center gap-3">
+                        <i className="ri-database-2-line text-2xl text-[#6D9D39]"></i>
+                        上傳原始資料
                     </div>
-                ) : (
-                    <label className="flex cursor-pointer flex-col items-center justify-center gap-4 py-12 transition-colors relative overflow-hidden">
-                        {/* Illustrative Background Icons */}
-                        <FileText className="absolute top-4 left-4 h-12 w-12 text-slate-100 dark:text-slate-700/50 -rotate-12" />
-                        <FileText className="absolute bottom-4 right-4 h-16 w-16 text-slate-100 dark:text-slate-700/50 rotate-12" />
-
-                        {/* Main Interaction Area */}
-                        <div className="relative group-hover:scale-110 transition-transform duration-300">
-                            <div className="absolute inset-0 bg-rose-200/50 rounded-full blur-xl group-hover:bg-rose-300/60 dark:bg-emerald-900/40" />
-                            <div className="relative flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-white to-slate-50 shadow-2xl shadow-rose-100 border-4 border-white dark:from-slate-700 dark:to-slate-800 dark:border-slate-600">
-                                <Upload className="h-10 w-10 text-rose-500 dark:text-emerald-400" />
+                    {dataFile ? (
+                        <span className="badge-pro bg-[#6D9D39] text-white">READY</span>
+                    ) : (
+                        <span className="badge-pro bg-[#E7EEF8] text-[#4984AC] border border-[#4984AC33]">WAITING</span>
+                    )}
+                </div>
+                
+                <label className="pro-upload-area group">
+                    {!dataFile ? (
+                        <div className="text-center z-10 transition-colors group-hover:text-[#08739D]">
+                            <i className="ri-upload-cloud-2-line text-5xl mb-3 block text-[#4984AC]"></i>
+                            <div className="text-lg font-bold">點擊或拖放 TXT / CSV 檔案</div>
+                            <div className="text-sm opacity-60">支援多種編碼自動偵測</div>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-4 bg-white p-6 rounded-2xl shadow-inner border border-[#E7EEF8] z-10">
+                            <div className="w-12 h-12 bg-[#08739D1A] rounded-xl flex items-center justify-center text-[#08739D] text-2xl">
+                                <i className="ri-file-text-line"></i>
                             </div>
+                            <div className="flex-1 min-w-0">
+                                <div className="font-bold text-[#08739D] truncate">{dataFile.name}</div>
+                                <div className="text-xs text-[#4984AC] font-medium">{(dataFile.size / 1024).toFixed(1)} KB</div>
+                            </div>
+                            <button 
+                                onClick={(e) => { e.preventDefault(); onClearData(); }}
+                                className="w-8 h-8 rounded-full hover:bg-[#FEE2E2] hover:text-[#EF4444] text-[#A0AEC0] flex items-center justify-center transition-colors"
+                            >
+                                <i className="ri-close-line text-xl"></i>
+                            </button>
                         </div>
-
-                        <div className="text-center relative z-10">
-                            <p className="text-lg font-bold text-slate-800 dark:text-slate-100">上傳資料檔</p>
-                            <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">支援 .txt (工顯) / .csv (Keyence)</p>
-                        </div>
-                        <input type="file" className="hidden" accept=".txt,.csv" onChange={onDataUpload} />
-                    </label>
-                )}
+                    )}
+                    <input type="file" onChange={onDataUpload} className="hidden" accept=".txt,.csv" />
+                </label>
             </div>
 
-            {/* 2. Excel Upload */}
-            <div className={`group relative overflow-hidden rounded-2xl border bg-white/60 p-1 transition-all duration-300 backdrop-blur-sm ${!excelFile ? 'border-dashed border-slate-300 hover:border-emerald-400' : 'border-solid border-emerald-200 shadow-xl shadow-emerald-100/20'} dark:bg-slate-800/60 dark:border-slate-700 dark:hover:border-emerald-500/50`}>
-                {excelFile ? (
-                    <div className="flex items-center justify-between gap-4 p-5">
-                        <div className="flex items-center gap-4">
-                            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400">
-                                <FileSpreadsheet className="h-6 w-6" />
-                            </div>
-                            <div>
-                                <h3 className="font-semibold text-slate-900 line-clamp-1 dark:text-slate-100">{excelFile.name}</h3>
-                                <p className="text-xs font-medium text-slate-500 dark:text-slate-400">{(excelFile.size / 1024).toFixed(1)} KB</p>
-                            </div>
-                        </div>
-                        <button onClick={onClearExcel} className="rounded-lg p-2 text-slate-400 hover:bg-rose-50 hover:text-rose-500 dark:text-slate-300 dark:hover:bg-red-900/20 dark:hover:text-red-400">
-                            <Trash2 className="h-5 w-5" />
-                        </button>
+            {/* Excel Template Card */}
+            <div className="pro-card">
+                <div className="flex justify-between items-center mb-2">
+                    <div className="text-xl font-black text-[#08739D] flex items-center gap-3">
+                        <i className="ri-file-excel-2-line text-2xl text-[#AEC60C]"></i>
+                        上傳 Excel 模板
                     </div>
-                ) : (
-                    <label className="flex cursor-pointer flex-col items-center justify-center gap-4 py-12 transition-colors relative overflow-hidden">
-                        {/* Illustrative Background Icons */}
-                        <FileSpreadsheet className="absolute top-8 left-8 h-10 w-10 text-slate-100 dark:text-slate-700/50 rotate-6" />
-                        <div className="absolute top-4 right-10 h-16 w-24 bg-slate-100 dark:bg-slate-700/30 rounded-lg -rotate-6 transform skew-x-6" />
-
-                        {/* Main Interaction Area */}
-                        <div className={`relative group-hover:scale-110 transition-transform duration-300 ${!dataFile ? 'opacity-50 grayscale' : ''}`}>
-                            <div className="absolute inset-0 bg-emerald-200/50 rounded-full blur-xl group-hover:bg-emerald-300/60 dark:bg-emerald-900/40" />
-                            <div className="relative flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-white to-slate-50 shadow-2xl shadow-emerald-100 border-4 border-white dark:from-slate-700 dark:to-slate-800 dark:border-slate-600">
-                                <FileSpreadsheet className="h-10 w-10 text-emerald-500 dark:text-emerald-400" />
+                    {excelFile ? (
+                        <span className="badge-pro bg-[#6D9D39] text-white">READY</span>
+                    ) : (
+                        <span className="badge-pro bg-[#E7EEF8] text-[#4984AC] border border-[#4984AC33]">WAITING</span>
+                    )}
+                </div>
+                
+                <label className="pro-upload-area group">
+                    {!excelFile ? (
+                        <div className="text-center z-10 transition-colors group-hover:text-[#08739D]">
+                            <i className="ri-file-add-line text-5xl mb-3 block text-[#4984AC]"></i>
+                            <div className="text-lg font-bold">選擇 Excel 目的檔案 (.xlsx)</div>
+                            <div className="text-sm opacity-60">系統將透過規則填入數據</div>
+                        </div>
+                    ) : (
+                        <div className="flex items-center gap-4 bg-white p-6 rounded-2xl shadow-inner border border-[#E7EEF8] z-10">
+                            <div className="w-12 h-12 bg-[#AEC60C1A] rounded-xl flex items-center justify-center text-[#AEC60C] text-2xl">
+                                <i className="ri-file-excel-line"></i>
                             </div>
+                            <div className="flex-1 min-w-0">
+                                <div className="font-bold text-[#08739D] truncate">{excelFile.name}</div>
+                                <div className="text-xs text-[#4984AC] font-medium">{(excelFile.size / 1024).toFixed(1)} KB</div>
+                            </div>
+                            <button 
+                                onClick={(e) => { e.preventDefault(); onClearExcel(); }}
+                                className="w-8 h-8 rounded-full hover:bg-[#FEE2E2] hover:text-[#EF4444] text-[#A0AEC0] flex items-center justify-center transition-colors"
+                            >
+                                <i className="ri-close-line text-xl"></i>
+                            </button>
                         </div>
-
-                        <div className={`text-center relative z-10 ${!dataFile ? 'opacity-50' : ''}`}>
-                            <p className="text-lg font-bold text-slate-800 dark:text-slate-100">上傳 Excel 模板</p>
-                            <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1">支援 .xlsx 格式</p>
-                        </div>
-                        <input type="file" className="hidden" accept=".xlsx" onChange={onExcelUpload} disabled={!dataFile} />
-                    </label>
-                )}
+                    )}
+                    <input type="file" onChange={onExcelUpload} className="hidden" accept=".xlsx" />
+                </label>
             </div>
-        </>
+        </div>
     );
-}
+};
+
+export default FileUpload;

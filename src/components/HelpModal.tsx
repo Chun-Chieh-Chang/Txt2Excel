@@ -1,5 +1,5 @@
 
-import { AlertCircle, Save, FolderOpen, Edit2 } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 
 interface HelpModalProps {
     isOpen: boolean;
@@ -10,138 +10,85 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-sm p-4 animate-in fade-in">
-            <div className="w-full max-w-3xl rounded-3xl bg-white p-8 shadow-2xl animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col dark:bg-slate-800">
-                <h3 className="mb-6 text-2xl font-bold text-slate-900 dark:text-slate-100 flex-shrink-0">📖 使用說明</h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#1A202C66] backdrop-blur-sm p-4 animate-in fade-in">
+            <div className="w-full max-w-3xl rounded-2xl bg-white p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] animate-in zoom-in-95 duration-200 max-h-[90vh] flex flex-col">
+                <h3 className="mb-6 text-[24px] font-bold text-[#333333] flex-shrink-0 flex items-center gap-2">
+                    <i className="ri-book-read-line text-[#2D76FC]"></i>
+                    使用說明
+                </h3>
 
-                <div className="space-y-6 text-slate-700 dark:text-slate-300 overflow-y-auto pr-2 flex-1 min-h-0">
+                <div className="flex flex-col gap-6 text-[#333333] overflow-y-auto pr-2 flex-1 min-h-0 custom-scrollbar">
 
                     {/* 基本流程 */}
                     <section>
-                        <h4 className="mb-3 font-bold text-lg text-blue-600 dark:text-blue-400">📋 基本操作流程</h4>
-                        <div className="space-y-2 text-sm">
-                            <div className="flex items-start gap-3 p-3 bg-blue-50/50 rounded-lg border border-blue-100 dark:bg-blue-900/20 dark:border-blue-800/40">
-                                <span className="font-bold text-blue-600 dark:text-blue-400 shrink-0">步驟 1</span>
-                                <div>
-                                    <strong>上傳資料來源</strong>
-                                    <ul className="list-disc pl-5 mt-1 space-y-1">
-                                        <li><strong>TXT 檔案</strong>：純文字檔，每行代表一筆數據</li>
-                                        <li><strong>CSV 檔案</strong>：支援多欄位數據，上傳後可選擇要匯入的欄位</li>
-                                    </ul>
-                                </div>
+                        <h4 className="mb-4 font-bold text-[18px] text-[#2D76FC] flex items-center gap-2">
+                            <i className="ri-list-check-3"></i>
+                            基本操作流程
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div className="p-4 bg-[#F8FAFC] rounded-xl border border-[#E6E8EB]">
+                                <div className="font-bold text-[#2D76FC] text-[12px] uppercase tracking-wider mb-2">Step 1</div>
+                                <strong className="text-[15px] block mb-1">上傳資料來源</strong>
+                                <p className="text-[13px] text-[#888888]">上傳 .txt 或 .csv 資料檔案，系統會自動偵測編碼。</p>
                             </div>
-                            <div className="flex items-start gap-3 p-3 bg-blue-50/50 rounded-lg border border-blue-100 dark:bg-blue-900/20 dark:border-blue-800/40">
-                                <span className="font-bold text-blue-600 dark:text-blue-400 shrink-0">步驟 2</span>
-                                <div>
-                                    <strong>上傳 Excel 模板</strong>
-                                    <p className="mt-1">上傳您的 Excel 報告模板 (.xlsx)，系統會自動讀取工作表</p>
-                                </div>
+                            <div className="p-4 bg-[#F8FAFC] rounded-xl border border-[#E6E8EB]">
+                                <div className="font-bold text-[#2D76FC] text-[12px] uppercase tracking-wider mb-2">Step 2</div>
+                                <strong className="text-[15px] block mb-1">上傳 Excel 模板</strong>
+                                <p className="text-[13px] text-[#888888]">上傳您的報告模板 (.xlsx)，系統將讀取其結構。</p>
                             </div>
-                            <div className="flex items-start gap-3 p-3 bg-blue-50/50 rounded-lg border border-blue-100 dark:bg-blue-900/20 dark:border-blue-800/40">
-                                <span className="font-bold text-blue-600 dark:text-blue-400 shrink-0">步驟 3</span>
-                                <div>
-                                    <strong>設定填寫規則</strong>
-                                    <p className="mt-1">點擊「新增規則」定義數據如何填入 Excel</p>
-                                </div>
+                            <div className="p-4 bg-[#F8FAFC] rounded-xl border border-[#E6E8EB]">
+                                <div className="font-bold text-[#2D76FC] text-[12px] uppercase tracking-wider mb-2">Step 3</div>
+                                <strong className="text-[15px] block mb-1">設定填寫規則</strong>
+                                <p className="text-[13px] text-[#888888]">定義資料如何對應至 Excel，可載入或新建設定檔。</p>
                             </div>
-                            <div className="flex items-start gap-3 p-3 bg-blue-50/50 rounded-lg border border-blue-100 dark:bg-blue-900/20 dark:border-blue-800/40">
-                                <span className="font-bold text-blue-600 dark:text-blue-400 shrink-0">步驟 4</span>
-                                <div>
-                                    <strong>執行填入</strong>
-                                    <p className="mt-1">點擊「開始執行填入」，完成後自動下載新的 Excel 檔案</p>
-                                </div>
+                            <div className="p-4 bg-[#F8FAFC] rounded-xl border border-[#E6E8EB]">
+                                <div className="font-bold text-[#2D76FC] text-[12px] uppercase tracking-wider mb-2">Step 4</div>
+                                <strong className="text-[15px] block mb-1">執行填入</strong>
+                                <p className="text-[13px] text-[#888888]">點擊開始按鈕，完成後系統會自動觸發下載。</p>
                             </div>
                         </div>
                     </section>
 
                     {/* 設定檔管理 */}
                     <section>
-                        <h4 className="mb-3 font-bold text-lg text-indigo-600 dark:text-indigo-400">💾 設定檔管理（多產品支援）</h4>
-                        <p className="text-sm mb-3">您可以將常用的設定儲存為「設定檔」，方便日後快速套用。支援管理多個產品的設定檔庫。</p>
-
-                        <div className="space-y-3">
-                            {/* 儲存設定 */}
-                            <div className="bg-gradient-to-r from-indigo-50 to-purple-50 p-4 rounded-lg border border-indigo-100 dark:from-indigo-900/20 dark:to-purple-900/20 dark:border-indigo-800/40">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Save className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                                    <strong className="text-indigo-700 dark:text-indigo-300">儲存設定</strong>
-                                </div>
-                                <ul className="list-disc pl-5 space-y-1 text-sm">
-                                    <li><strong>新建檔案</strong>：建立一個全新的設定檔庫（JSON 檔案）</li>
-                                    <li><strong>加入現有</strong>：將目前設定追加到已存在的設定檔庫中</li>
-                                    <li>💡 <em>提示：一個設定檔庫可以包含多個產品的設定</em></li>
-                                </ul>
-                            </div>
-
-                            {/* 載入設定 */}
-                            <div className="bg-gradient-to-r from-emerald-50 to-teal-50 p-4 rounded-lg border border-emerald-100 dark:from-emerald-900/20 dark:to-teal-900/20 dark:border-emerald-800/40">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <FolderOpen className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                                    <strong className="text-emerald-700 dark:text-emerald-300">載入設定檔</strong>
-                                </div>
-                                <ul className="list-disc pl-5 space-y-1 text-sm">
-                                    <li>支援載入<strong>單一設定檔</strong>或<strong>設定檔庫</strong></li>
-                                    <li>載入設定檔庫時，會彈出選擇視窗讓您挑選要套用的產品</li>
-                                    <li>💡 <em>提示：可以在上傳資料來源後直接載入設定檔，系統會自動套用</em></li>
-                                </ul>
-                            </div>
-
-                            {/* 管理設定檔 */}
-                            <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-4 rounded-lg border border-amber-100 dark:from-amber-900/20 dark:to-orange-900/20 dark:border-amber-800/40">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Edit2 className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                                    <strong className="text-amber-700 dark:text-amber-300">管理設定檔庫</strong>
-                                </div>
-                                <p className="text-sm mb-2">載入設定檔庫後，在選擇視窗中可以：</p>
-                                <ul className="list-disc pl-5 space-y-1 text-sm">
-                                    <li><strong>重命名</strong>：將滑鼠移到設定檔名稱上，點擊鉛筆圖示 ✏️ 即可修改</li>
-                                    <li><strong>刪除</strong>：點擊垃圾桶圖示 🗑️ 可永久刪除該設定檔</li>
-                                    <li>⚠️ <em>注意：所有修改會立即寫入檔案，無法復原</em></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* 進階功能 */}
-                    <section>
-                        <h4 className="mb-3 font-bold text-lg text-purple-600 dark:text-purple-400">🚀 進階功能</h4>
-                        <div className="space-y-2 text-sm">
-                            <div className="p-3 bg-purple-50/50 rounded-lg border border-purple-100 dark:bg-purple-900/20 dark:border-purple-800/40">
-                                <strong className="text-purple-700 dark:text-purple-300">跨工作表填寫</strong>
-                                <p className="mt-1">設定檔支援「相對工作表位置」，可以自動適應不同的工作表結構</p>
-                                <p className="text-xs text-purple-600 dark:text-purple-400 mt-1">
-                                    例如：規則 1 在「第 5 張表」，規則 2 在「第 6 張表」，載入時系統會自動計算偏移量
+                        <h4 className="mb-4 font-bold text-[18px] text-[#00A8A8] flex items-center gap-2">
+                            <i className="ri-save-3-line"></i>
+                            設定檔管理
+                        </h4>
+                        <div className="flex flex-col gap-3 text-[14px]">
+                            <div className="p-4 bg-[#F0FFFF] rounded-xl border border-[#00A8A833]">
+                                <strong className="text-[#008080] block mb-1">多產品支援</strong>
+                                <p className="text-[#556677] text-[13px]">
+                                    您可以將目前的規則儲存為 JSON 檔案。在載入時，如果檔案包含多個設定，系統將提供清單讓您選擇套用。
                                 </p>
                             </div>
-                            <div className="p-3 bg-purple-50/50 rounded-lg border border-purple-100 dark:bg-purple-900/20 dark:border-purple-800/40">
-                                <strong className="text-purple-700 dark:text-purple-300">自動編碼偵測</strong>
-                                <p className="mt-1">系統會自動偵測 TXT/CSV 檔案的編碼（支援 UTF-8、Big5、GBK 等），避免亂碼問題</p>
-                            </div>
-                            <div className="p-3 bg-purple-50/50 rounded-lg border border-purple-100 dark:bg-purple-900/20 dark:border-purple-800/40">
-                                <strong className="text-purple-700 dark:text-purple-300">格式保留</strong>
-                                <p className="mt-1">系統會完整保留 Excel 模板的格式、樣式、圖片等，僅填入數據並設定字體為黑色</p>
+                            <div className="p-4 bg-[#F0FFFF] rounded-xl border border-[#00A8A833]">
+                                <strong className="text-[#008080] block mb-1">相對位置偏移</strong>
+                                <p className="text-[#556677] text-[13px]">
+                                    設定檔會紀錄工作表的相對位置。載入時只需指定「起始工作表」，後續規則會根據偏移量自動尋找對應 Sheet。
+                                </p>
                             </div>
                         </div>
                     </section>
 
                     {/* 注意事項 */}
-                    <div className="mt-4 p-4 bg-yellow-50 rounded-xl text-xs text-yellow-700 border border-yellow-100 flex items-start gap-2 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-800/40">
+                    <div className="mt-4 p-4 bg-[#FFF5F5] rounded-xl text-[13px] text-[#C53030] border border-[#FECACA] flex items-start gap-2">
                         <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-                        <div className="space-y-1">
-                            <p><strong>⚠️ 重要提醒：</strong></p>
+                        <div className="flex flex-col gap-1">
+                            <p className="font-bold">重要提醒：</p>
                             <ul className="list-disc pl-5 space-y-1">
-                                <li>原始的 Excel 檔案<strong>不會被修改</strong>，系統會產生一個新的檔案</li>
-                                <li>設定檔的修改（重命名/刪除）會<strong>立即寫入檔案</strong>，請謹慎操作</li>
-                                <li>建議定期備份重要的設定檔庫</li>
+                                <li>系統處理完成後會下載一個「新檔案」，不會變更您的原始模板。</li>
+                                <li>重命名或刪除設定檔的操作會「立即套用」至本地檔案。</li>
+                                <li>請確保瀏覽器支援 File System Access API (建議使用 Chrome/Edge)。</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <div className="mt-8 flex justify-end pt-4 border-t border-slate-100 dark:border-slate-700 flex-shrink-0">
+                <div className="mt-8 flex justify-end pt-4 border-t border-[#E6E8EB] flex-shrink-0">
                     <button
                         onClick={onClose}
-                        className="rounded-xl bg-slate-900 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-slate-900/20 hover:bg-slate-800 dark:bg-slate-700 dark:hover:bg-slate-600"
+                        className="py-3 px-8 rounded-xl bg-[#333333] text-white font-bold text-[14px] shadow-lg transition-all hover:bg-[#222222]"
                     >
                         關閉
                     </button>

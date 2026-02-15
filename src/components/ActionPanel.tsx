@@ -1,46 +1,54 @@
 
-import { RefreshCw } from 'lucide-react';
+import React from 'react';
 import { ProgressState } from '../types';
 
 interface ActionPanelProps {
     progress: ProgressState;
     isProcessing: boolean;
-    canExecute: boolean;
     onExecute: () => void;
+    canExecute: boolean;
 }
 
-export default function ActionPanel({
-    progress,
-    isProcessing,
-    canExecute,
-    onExecute
-}: ActionPanelProps) {
+const ActionPanel: React.FC<ActionPanelProps> = ({ progress, isProcessing, onExecute, canExecute }) => {
     return (
-        <div className="rounded-3xl border border-white/40 bg-white/40 p-6 shadow-xl shadow-rose-100/50 backdrop-blur-xl dark:border-slate-700/50 dark:bg-slate-800/50 dark:shadow-emerald-900/10">
-            <div className="mb-6 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                    <div className="rounded-full bg-white/60 p-2 dark:bg-slate-700/60">
-                        <RefreshCw className={`h-5 w-5 text-slate-600 dark:text-slate-200 ${isProcessing ? 'animate-spin' : ''}`} />
+        <div className="pro-card">
+            <div className="flex flex-col gap-6">
+                <div className="flex justify-between items-end">
+                    <div className="flex flex-col gap-1">
+                        <div className="text-[12px] font-black text-[#4984AC] uppercase tracking-[0.1em]">系統狀態 Processing Status</div>
+                        <div className="text-2xl font-bold text-[#08739D]">{progress.status}</div>
                     </div>
-                    <span className="font-semibold text-slate-900 dark:text-slate-100">{progress.status}</span>
+                    {isProcessing && (
+                        <div className="text-3xl font-black text-[#AEC60C] italic">
+                            {progress.percent}%
+                        </div>
+                    )}
                 </div>
-                <span className="text-sm font-medium text-slate-500 dark:text-slate-400">{progress.percent}%</span>
-            </div>
 
-            <div className="mb-6 h-3 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-700/50">
-                <div
-                    className="h-full bg-gradient-to-r from-rose-500 to-pink-600 dark:from-emerald-500 dark:to-teal-600 transition-all duration-300 ease-out"
-                    style={{ width: `${progress.percent}%` }}
-                />
-            </div>
+                <div className="h-4 w-full bg-[#E7EEF8] rounded-full overflow-hidden border border-white">
+                    <div 
+                        className="h-full transition-all duration-700 ease-out"
+                        style={{ 
+                            width: `${progress.percent}%`,
+                            background: 'linear-gradient(90deg, #08739D 0%, #6D9D39 100%)',
+                            boxShadow: '0 0 15px rgba(109,157,57,0.4)'
+                        }}
+                    ></div>
+                </div>
 
-            <button
-                onClick={onExecute}
-                disabled={!canExecute || isProcessing}
-                className="w-full rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 dark:from-emerald-600 dark:to-teal-700 py-4 text-base font-bold text-white shadow-lg shadow-rose-500/30 dark:shadow-emerald-500/30 transition-all hover:scale-[1.02] hover:shadow-xl hover:shadow-rose-500/40 dark:hover:shadow-emerald-500/40 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
-            >
-                {isProcessing ? '處理中...' : '開始執行填入'}
-            </button>
+                <div className="flex justify-center mt-4">
+                    <button 
+                        onClick={onExecute}
+                        disabled={!canExecute || isProcessing}
+                        className="execute-btn-pro disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed group"
+                    >
+                        <span>{isProcessing ? '正在執行系統指令' : '啟動自動化執行'}</span>
+                        <i className="ri-flashlight-line group-hover:animate-bounce"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     );
-}
+};
+
+export default ActionPanel;
