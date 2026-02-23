@@ -30,6 +30,8 @@ import HelpModal from "./components/HelpModal";
 import ProfileManager from "./components/ProfileManager";
 import SheetSelectionModal from "./components/SheetSelectionModal";
 import ProductSelectionModal from "./components/ProductSelectionModal";
+import Win32ComRepairModal from "./components/Win32ComRepairModal";
+import { detectWin32ComError } from "./utils/win32comRepair";
 
 export default function App() {
   const [parsedData, setParsedData] = useState<ParsedData>([]);
@@ -59,6 +61,9 @@ export default function App() {
   // Product Selection State (Library)
   const [showProductDialog, setShowProductDialog] = useState(false);
   const [loadedLibrary, setLoadedLibrary] = useState<ProfileLibrary>([]);
+
+  // Win32Com Repair State
+  const [showRepairDialog, setShowRepairDialog] = useState(false);
 
   // Rule Dialog Form State
   const [ruleForm, setRuleForm] = useState<{
@@ -159,6 +164,13 @@ export default function App() {
         }));
       }
     } catch (err: any) {
+      // 檢查是否為 win32com 錯誤
+      const win32ComDetection = detectWin32ComError(err);
+      if (win32ComDetection.isWin32ComError && win32ComDetection.canAutoRepair) {
+        setShowRepairDialog(true);
+        return;
+      }
+      
       alert(err.message);
       setExcelFile(null);
     }
@@ -256,6 +268,14 @@ export default function App() {
       setProgress((p) => ({ ...p, status: "處理完成" }));
     } catch (err: any) {
       console.error(err);
+      
+      // 檢查是否為 win32com 錯誤
+      const win32ComDetection = detectWin32ComError(err);
+      if (win32ComDetection.isWin32ComError && win32ComDetection.canAutoRepair) {
+        setShowRepairDialog(true);
+        return;
+      }
+      
       alert(`錯誤: ${err.message}`);
       setProgress((p) => ({ ...p, status: "發生錯誤" }));
     } finally {
@@ -425,6 +445,18 @@ export default function App() {
     }
   };
 
+  const handleRepairComplete = () => {
+    // 修復完成後重置相關狀態
+    setProgress({ percent: 0, current: 0, total: 0, status: "準備就緒" });
+    
+    // 可選：自動重試失敗的操作
+    if (dataFile && excelFile && rules.length > 0) {
+      setTimeout(() => {
+        executeProcess();
+      }, 1000);
+    }
+  };
+
   return (
     <div className="min-h-screen relative py-8">
       <Header onReset={resetAll} onOpenHelp={() => setShowHelpDialog(true)} />
@@ -527,6 +559,12 @@ export default function App() {
       />
 
       <HelpModal isOpen={showHelpDialog} onClose={() => setShowHelpDialog(false)} />
+      
+      <Win32ComRepairModal
+        isOpen={showRepairDialog}
+        onClose={() => setShowRepairDialog(false)}
+        onRepairComplete={handleRepairComplete}
+      />
     </div>
   );
 }

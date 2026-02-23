@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "repair-server": "cd server && python repair_server.py",
+    "start-repair-server": "cd server && start_repair_server.bat"
   },
   "dependencies": {
     "jschardet": "^3.1.4",
